@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brand Landing Page — Alex Johnson</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #faf7f0;
+    --ink: #1a1208;
+    --gold: #c9922a;
+    --gold-light: #f0d48a;
+    --muted: #7a6f5a;
+    --border: rgba(26,18,8,0.1);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+
+  a.back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--muted); text-decoration: none; font-size: 13px;
+    padding: 1rem 1.5rem; transition: color 0.2s;
+  }
+  a.back-link:hover { color: var(--gold); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem;
+    mix-blend-mode: multiply;
+  }
+  .brand { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--ink); text-decoration: none; }
+  .nav-cta {
+    padding: 10px 24px; background: var(--ink); color: var(--cream);
+    border-radius: 999px; font-size: 13px; font-weight: 500;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--gold); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 8rem 2rem 4rem;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards;
+  }
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 9vw, 8rem); font-weight: 900; line-height: 0.95;
+    letter-spacing: -0.03em; margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.9s 0.4s ease forwards;
+  }
+  .hero-headline em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 18px; font-weight: 300; color: var(--muted);
+    max-width: 480px; margin: 0 auto 3rem; line-height: 1.7;
+    opacity: 0; animation: fadeUp 0.9s 0.6s ease forwards;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem; justify-content: center;
+    opacity: 0; animation: fadeUp 0.9s 0.8s ease forwards;
+  }
+  .btn-gold {
+    padding: 16px 36px; background: var(--gold); color: white;
+    border-radius: 999px; font-size: 15px; font-weight: 500;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-gold:hover { background: var(--ink); transform: translateY(-2px); }
+  .btn-ghost {
+    padding: 16px 36px; background: transparent; color: var(--ink);
+    border: 1px solid var(--border); border-radius: 999px;
+    font-size: 15px; font-weight: 500; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .scroll-line {
+    position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    opacity: 0; animation: fadeUp 1s 1.2s ease forwards;
+  }
+  .scroll-line::after {
+    content: ''; width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 1.25rem 0; background: var(--ink); color: var(--cream);
+  }
+  .marquee-track {
+    display: flex; gap: 3rem; width: max-content;
+    animation: marquee 18s linear infinite;
+    font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic;
+    color: rgba(250,247,240,0.5);
+  }
+  .marquee-track span { color: var(--gold-light); font-style: normal; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* FEATURES */
+  #features { padding: 8rem 3rem; max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-sub { font-size: 16px; color: var(--muted); max-width: 480px; line-height: 1.7; margin-bottom: 4rem; }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .feature-card {
+    padding: 2rem; border: 1px solid var(--border); border-radius: 20px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--gold); opacity: 0; transition: opacity 0.3s;
+    z-index: 0;
+  }
+  .feature-card:hover::before { opacity: 0.04; }
+  .feature-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .feature-num {
+    font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900;
+    color: var(--gold-light); line-height: 1; margin-bottom: 1rem;
+    position: relative; z-index: 1;
+  }
+  .feature-title { font-size: 18px; font-weight: 500; margin-bottom: 0.75rem; position: relative; z-index: 1; }
+  .feature-desc { font-size: 14px; color: var(--muted); line-height: 1.7; position: relative; z-index: 1; }
+
+  /* SHOWCASE */
+  #showcase { background: var(--ink); padding: 8rem 3rem; }
+  .showcase-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  #showcase .section-title { color: var(--cream); }
+  #showcase .section-sub { color: rgba(250,247,240,0.5); }
+  .showcase-visual {
+    aspect-ratio: 4/3; background: var(--gold);
+    border-radius: 24px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 80px; font-weight: 900;
+    color: rgba(255,255,255,0.2); letter-spacing: -0.05em;
+    position: relative; overflow: hidden;
+  }
+  .showcase-visual::after {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.03) 20px, rgba(255,255,255,0.03) 40px);
+  }
+  .stat-row { display: flex; gap: 2rem; margin-top: 2rem; }
+  .stat { }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: var(--gold); }
+  .stat-l { font-size: 13px; color: rgba(250,247,240,0.4); margin-top: 4px; }
+
+  /* TESTIMONIAL */
+  #testimonial { padding: 8rem 3rem; text-align: center; max-width: 800px; margin: 0 auto; }
+  .quote-mark {
+    font-family: 'Playfair Display', serif; font-size: 120px; line-height: 0.5;
+    color: var(--gold-light); margin-bottom: 2rem;
+  }
+  blockquote {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem); line-height: 1.6;
+    color: var(--ink); margin-bottom: 2rem;
+  }
+  .cite { font-size: 14px; color: var(--muted); }
+  .cite strong { color: var(--ink); font-weight: 500; font-style: normal; }
+
+  /* CTA */
+  #cta { background: var(--gold); padding: 6rem 3rem; text-align: center; }
+  #cta h2 {
+    font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 900; color: white; margin-bottom: 1rem;
+  }
+  #cta p { color: rgba(255,255,255,0.7); margin-bottom: 2.5rem; font-size: 17px; }
+  .btn-white {
+    padding: 18px 44px; background: white; color: var(--gold);
+    border-radius: 999px; font-size: 16px; font-weight: 500;
+    text-decoration: none; display: inline-block; transition: all 0.2s;
+  }
+  .btn-white:hover { background: var(--ink); color: white; transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink); padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    color: rgba(250,247,240,0.3); font-size: 13px;
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 768px) {
+    .features-grid, .showcase-inner { grid-template-columns: 1fr; }
+    nav { padding: 1rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="portfolio.html">← Back to portfolio</a>
+
+<nav>
+  <a href="#" class="brand">Lumière</a>
+  <a href="#cta" class="nav-cta">Get started</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-eyebrow">Introducing Lumière 2.0</p>
+  <h1 class="hero-headline">Crafted for<br><em>those who</em><br>notice.</h1>
+  <p class="hero-sub">A premium product experience built with obsessive attention to detail, for people who demand nothing less.</p>
+  <div class="hero-btns">
+    <a href="#features" class="btn-gold">Explore the product</a>
+    <a href="#showcase" class="btn-ghost">See it in action</a>
+  </div>
+  <div class="scroll-line">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Award-winning</span> · Precision-built · <span>100% handcrafted</span> · Trusted by 10,000+ · <span>Award-winning</span> · Precision-built · <span>100% handcrafted</span> · Trusted by 10,000+ · <span>Award-winning</span> · Precision-built · <span>100% handcrafted</span> · Trusted by 10,000+ ·
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="reveal">
+    <div class="section-title">Why Lumière?</div>
+    <p class="section-sub">We obsess over every pixel, every interaction, every moment so you don't have to.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-num">01</div>
+      <div class="feature-title">Obsessive detail</div>
+      <p class="feature-desc">Every transition, every shadow, every micro-interaction is considered and intentional.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.1s;">
+      <div class="feature-num">02</div>
+      <div class="feature-title">Built to last</div>
+      <p class="feature-desc">Engineered with longevity in mind. No trends, no gimmicks — just timeless craft.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.2s;">
+      <div class="feature-num">03</div>
+      <div class="feature-title">Made for humans</div>
+      <p class="feature-desc">Accessibility and usability are first-class concerns, not afterthoughts.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section id="showcase">
+  <div class="showcase-inner">
+    <div class="reveal">
+      <div class="section-title">Numbers that speak.</div>
+      <p class="section-sub">Lumière has earned the trust of creators and companies across the world.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="stat-n">10k+</div><div class="stat-l">Happy users</div></div>
+        <div class="stat"><div class="stat-n">98%</div><div class="stat-l">Satisfaction rate</div></div>
+        <div class="stat"><div class="stat-n">4.9★</div><div class="stat-l">Average rating</div></div>
+      </div>
+    </div>
+    <div class="showcase-visual reveal" style="transition-delay:0.15s;">LM</div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonial">
+  <div class="reveal">
+    <div class="quote-mark">"</div>
+    <blockquote>Lumière changed how I think about product design entirely. It's the rare thing that is both beautiful and effortlessly functional.</blockquote>
+    <p class="cite">— <strong>Maria K.</strong>, Creative Director at Studio North</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="reveal">
+    <h2>Ready to begin?</h2>
+    <p>Join thousands of people who chose to notice the difference.</p>
+    <a href="#" class="btn-white">Start your journey</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Lumière. A project by <a href="portfolio.html">Alex Johnson</a>.</span>
+  <span>Built with HTML & CSS</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
